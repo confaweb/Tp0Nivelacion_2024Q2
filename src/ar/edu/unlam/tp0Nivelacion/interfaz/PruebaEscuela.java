@@ -47,34 +47,34 @@ public class PruebaEscuela {
 			switch (perfilUsuario) {
 			case '1':
 
-				Integer dni = LoginMenu(teclado);
+				Integer dni = loginMenu(teclado);
 
-				if (AdministrativoLog(listado, dni) == true) {
+				if (administrativoLog(listado, dni) == true) {
 					System.out.println("\n!!!Login correcto!!! \n\n");
 					System.out.println("*** Menu Perfil ADMINISTRATIVO *** \n\n");
-					AdministrativoMenu(teclado);
+					administrativoMenu(teclado);
 				} else {
 					System.out.println("\n\n ¬¬¬¬Login invalido");
 				}
 				break;
 			case '2':
 
-				Integer dni1 = LoginMenu(teclado);
+				Integer dni1 = loginMenu(teclado);
 
-				if (DocenteLog(listadoDocentes, dni1) == true) {
+				if (docenteLog(listadoDocentes, dni1) == true) {
 					System.out.println("\n!!!Login correcto!!! \n\n");
 					System.out.println("** Menu Perfil DOCENTE ** \n\n");
-					DocenteMenu(teclado);
+					docenteMenu(teclado);
 				} else
 					System.out.println("\n\n ¬¬¬¬Login invalido");
 				break;
 			case '3':
-				Integer dni2 = LoginMenu(teclado);
+				Integer dni2 = loginMenu(teclado);
 
-				if (AlumnoLog(listadoAlumnos, dni2) == true) {
+				if (alumnoLog(listadoAlumnos, dni2) == true) {
 					System.out.println("\n!!!Login correcto!!! \n\n");
 					System.out.println("* Menu Perfil ALUMNO * \n\n");
-					AlumnoMenu(teclado);
+					alumnoMenu(teclado);
 				} else
 					System.out.println("\n\n ¬¬¬¬Login invalido");
 
@@ -93,7 +93,7 @@ public class PruebaEscuela {
 
 	}
 
-	private static void AdministrativoMenu(Scanner tecaldo) {
+	private static void administrativoMenu(Scanner tecaldo) {
 		char opcion;
 		do {
 			System.out.println("\n Ingrese la opcion deseada:\n\n");
@@ -108,7 +108,7 @@ public class PruebaEscuela {
 			case 'a':
 				Scanner teclado = new Scanner(System.in);
 				System.out.println("Menu inscribir alumno");
-				InscribirAlumno(teclado);
+				inscribirAlumno(teclado);
 				break;
 			case 'd':
 				Scanner teclado1 = new Scanner(System.in);
@@ -130,65 +130,141 @@ public class PruebaEscuela {
 	}
 
 	private static void IngresarDocente(Scanner teclado) {
-	    String nombre, apellido, especializacion;
-	    Integer dni;
-	    Competencia expertise = null;
-	    Boolean docenteCreado = false;
-	    char opcion;
+		String nombre, apellido, especializacion;
+		Integer dni;
+		Competencia expertise = null;
+		Boolean docenteCreado = false;
+		do {
 
-	    do {
-	        System.out.println("Presione 1 para Ingresar datos o 0 para salir");
-	        opcion = teclado.next().charAt(0);
+			System.out.println("\nIngrese Nombre del Docente\n");
+			nombre = teclado.next();
+			System.out.println("\nIngrese Apellido del Docente\n");
+			apellido = teclado.next();
+			System.out.println("\nIngrese dni del Docente\n");
+			dni = teclado.nextInt();
+			especializacion = seleccionExperiencia(teclado);
+//	            System.out.println("\nIngrese Expertise del Docente (PRIMER_GRADO, SEGUNDO_GRADO, etc.)\n");
+//			especializacion = teclado.next();
+//	            
+//	            try {
+//			if (especializacion!= "") {
+//				expertise = Competencia.valueOf(especializacion.toUpperCase());
+//			}
+//	            } catch (IllegalArgumentException e) {
+//	                System.out.println("Especialización inválida. Por favor intente nuevamente.");
+//	                continue;
+//	            }
+			if (especializacion != "") {
+				expertise = Competencia.valueOf(especializacion.toUpperCase());
+			}
 
-	        if (opcion == '1') {
-	            System.out.println("\nIngrese Nombre del Docente\n");
-	            nombre = teclado.next();
-	            System.out.println("\nIngrese Apellido del Docente\n");
-	            apellido = teclado.next();
-	            System.out.println("\nIngrese dni del Docente\n");
-	            dni = teclado.nextInt();
-	            System.out.println("\nIngrese Expertise del Docente (PRIMER_GRADO, SEGUNDO_GRADO, etc.)\n");
-	            especializacion = teclado.next();
+			Docente docente = new Docente(nombre, apellido, dni, expertise);
 
-	            try {
-	                expertise = Competencia.valueOf(especializacion.toUpperCase());
-	            } catch (IllegalArgumentException e) {
-	                System.out.println("Especialización inválida. Por favor intente nuevamente.");
-	                continue;
-	            }
+			if (docente.getApellido() != null && docente.getNombre() != null && docente.getDni() != null
+					&& docente.getExpertis() != null) {
+				docenteCreado = true;
+				System.out.println("Docente creado exitosamente.");
+			} else {
+				System.out.println("Algo fallo en el ingreso de datos\nVuelva a Intentarlo ");
+			}
 
-	            Docente docente = new Docente(nombre, apellido, dni, expertise);
-	            if (docente.getApellido() != null && docente.getNombre() != null && docente.getDni() != null
-	                    && docente.getExpertis() != null) {
-	                docenteCreado = true;
-	                System.out.println("Docente creado exitosamente.");
-	            } else {
-	                System.out.println("Algo fallo en el ingreso de datos\nVuelva a Intentarlo o presione '0' para salir");
-	            }
-	        } else if (opcion == '0') {
-	            break;
-	        } else {
-	            System.out.println("Opción inválida. Por favor, ingrese 1 o 0.");
-	        }
-	    } while (!docenteCreado);
+		} while (!docenteCreado);
 	}
 
+	private static String seleccionExperiencia(Scanner teclado) {
+		String especializacion = "";
+		Boolean asignada = false;
 
-	private static void InscribirAlumno(Scanner teclado) {
-		// TODO Auto-generated method stub
+		char seleccion;
+		do {
+
+			System.out.println("\nSeleccione la experiencia acreditada del listado:\n\n");
+			System.out.println("'1' para primer grado");
+			System.out.println("'2' para seguno grado");
+			System.out.println("'3' para tercer grado");
+			System.out.println("'4' para cuarto grado");
+			System.out.println("'5' para quinto grado");
+			System.out.println("'6' para sexto grado");
+			System.out.println("'7' para septimo grado");
+			System.out.println("'S' para secundaria grado");
+			System.out.println("'E' para asignaturas especiales ");
+			System.out.println("\n'0' para volver al menu principal ");
+
+			seleccion = teclado.next().charAt(0);
+
+			switch (seleccion) {
+
+			case '1':
+				especializacion = "PRIMER_GRADO";
+				asignada = true;
+				break;
+
+			case '2':
+				especializacion = "SEGUNDO_GRADO";
+				asignada = true;
+
+				break;
+
+			case '3':
+				especializacion = "TERCER_GRADO";
+				asignada = true;
+				break;
+
+			case '4':
+				especializacion = "CUARTO_GRADO";
+				asignada = true;
+				break;
+
+			case '5':
+				especializacion = "QUINTO_GRADO";
+				asignada = true;
+				break;
+
+			case '6':
+				especializacion = "SEXTO_GRADO";
+				asignada = true;
+				break;
+
+			case '7':
+				especializacion = "SEPTIMO_GRADO";
+				asignada = true;
+				break;
+
+			case 'S':
+				especializacion = "SECUNDARIA";
+				asignada = true;
+				break;
+
+			case 'E':
+				especializacion = "ESPECIAL";
+				asignada = true;
+				break;
+			case '0':
+				System.out.println("Volviendo al menu priincipal......");
+				return "";
+			default:
+				System.out.println("Ingrese una opcion sugerida");
+				break;
+			}
+		} while (!asignada);
+		return especializacion;
 
 	}
 
-	private static Integer LoginMenu(Scanner teclado) {
+	private static void inscribirAlumno(Scanner teclado) {
+		inscribirAlumno(teclado);
+	}
+
+	private static Integer loginMenu(Scanner teclado) {
 		Integer dni = 0;
 		while (dni == 0) {
-			System.out.println("Ingrese numero dni");
+			System.out.println("Ingrese contrasenia (numero dni)");
 			dni = teclado.nextInt();
 		}
 		return dni;
 	}
 
-	private static boolean AdministrativoLog(PersonalNoDocente listado[], Integer dni) {
+	private static boolean administrativoLog(PersonalNoDocente listado[], Integer dni) {
 		Boolean login = false;
 
 		for (int i = 0; i < listado.length; i++) {
@@ -198,7 +274,7 @@ public class PruebaEscuela {
 		return login;
 	}
 
-	private static boolean DocenteLog(Docente listado[], Integer dni) {
+	private static boolean docenteLog(Docente listado[], Integer dni) {
 		Boolean login = false;
 
 		for (int i = 0; i < listado.length; i++) {
@@ -208,7 +284,7 @@ public class PruebaEscuela {
 		return login;
 	}
 
-	private static boolean AlumnoLog(Alumno listado[], Integer dni) {
+	private static boolean alumnoLog(Alumno listado[], Integer dni) {
 		Boolean login = false;
 
 		for (int i = 0; i < listado.length; i++) {
@@ -218,7 +294,7 @@ public class PruebaEscuela {
 		return login;
 	}
 
-	private static void DocenteMenu(Scanner teclado) {
+	private static void docenteMenu(Scanner teclado) {
 		char opcion;
 		do {
 			System.out.println("\n Ingrese la opcion deseada:\n\n");
@@ -252,7 +328,7 @@ public class PruebaEscuela {
 		} while (opcion != 's');
 	}
 
-	private static void AlumnoMenu(Scanner tecaldo) {
+	private static void alumnoMenu(Scanner tecaldo) {
 		char opcion;
 		do {
 			System.out.println("\n Ingrese la opcion deseada:\n\n");
