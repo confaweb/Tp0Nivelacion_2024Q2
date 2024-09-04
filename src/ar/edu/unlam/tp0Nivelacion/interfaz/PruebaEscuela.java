@@ -1,6 +1,7 @@
 package ar.edu.unlam.tp0Nivelacion.interfaz;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Scanner;
 
 import ar.edu.unlam.tp0Nivelacion.dominio.Alumno;
@@ -93,7 +94,7 @@ public class PruebaEscuela {
 
 	}
 
-	private static void administrativoMenu(Scanner tecaldo) {
+	private static void administrativoMenu(Scanner teclado) {
 		char opcion;
 		do {
 			System.out.println("\n Ingrese la opcion deseada:\n\n");
@@ -102,18 +103,18 @@ public class PruebaEscuela {
 			System.out.println("'c'- Para Crear un Curso");
 			System.out.println("'s'- Para Finalizar");
 
-			opcion = tecaldo.next().toLowerCase().charAt(0);
+			opcion = teclado.next().toLowerCase().charAt(0);
 
 			switch (opcion) {
 			case 'a':
-				Scanner teclado = new Scanner(System.in);
+
 				System.out.println("Menu inscribir alumno");
 				inscribirAlumno(teclado);
 				break;
 			case 'd':
-				Scanner teclado1 = new Scanner(System.in);
+
 				System.out.println("Menu Ingresar Docente");
-				IngresarDocente(teclado1);
+				IngresarDocente(teclado);
 				break;
 			case 'c':
 				System.out.println("Menu Crear Curso");
@@ -252,7 +253,92 @@ public class PruebaEscuela {
 	}
 
 	private static void inscribirAlumno(Scanner teclado) {
-		inscribirAlumno(teclado);
+		String nombre, apellido, especializacion;
+		Integer dni,edad;
+		Boolean alumnoCreado = false;
+		do {
+
+			System.out.println("\nIngrese Nombre del Alumno\n");
+			nombre = teclado.next();
+			System.out.println("\nIngrese Apellido del Alumno\n");
+			apellido = teclado.next();
+			System.out.println("\nIngrese dni del Alulmno\n");
+			dni = teclado.nextInt();			
+
+			LocalDate fechaDeNacimiento = ingresarFechaNacimiento(teclado);
+			edad=Period.between(fechaDeNacimiento, LocalDate.now()).getYears();
+
+
+			Alumno alumno = new Alumno(nombre, apellido, dni, fechaDeNacimiento,edad);
+
+			if (alumno.getApellido() != null && alumno.getNombre() != null && alumno.getDni() != null
+					&& alumno.getFechaDeNacimiento() != null&& alumno!=null) {
+				alumnoCreado = true;
+				System.out.println("Alumno creado exitosamente.");
+			} else {
+				System.out.println("Algo fallo en el ingreso de datos\nVuelva a Intentarlo ");
+			}
+
+		} while (!alumnoCreado);
+	}
+
+//	private static LocalDate ingresarFechaNacimiento2(Scanner teclado) {
+//		LocalDate fechaNacimiento = LocalDate.of(0, 0, 0);
+//		Integer dia, mes, anio;
+//		System.out.println("Ingrese año de nacimiento");
+//		if (validarAnio(anio) == true)
+//			anio = teclado.nextInt();
+//		System.out.println("Ingrese mes de nacimiento");
+//		if (validarMes(anio) == true)
+//			mes = teclado.nextInt();
+//		System.out.println("Ingrese dia de nacimiento");
+//		if (validarDia(mes) == true)
+//			dia = teclado.nextInt();
+//
+//		fechaNacimiento = LocalDate.of(anio, mes, dia);
+//		return fechaNacimiento;
+//
+//	}
+
+	private static LocalDate ingresarFechaNacimiento(Scanner teclado) {
+		int dia = 0, mes = 0, anio = 0;
+
+		System.out.println("Ingrese año de nacimiento");
+		while (!validarAnio(anio = teclado.nextInt())) {
+			System.out.println("Año inválido. Ingrese nuevamente:");
+		}
+
+		System.out.println("Ingrese mes de nacimiento");
+		while (!validarMes(mes = teclado.nextInt())) {
+			System.out.println("Mes inválido. Ingrese nuevamente:");
+		}
+
+		System.out.println("Ingrese día de nacimiento");
+		while (!validarDia(dia = teclado.nextInt(), mes, anio)) {
+			System.out.println("Día inválido. Ingrese nuevamente:");
+		}
+
+		return LocalDate.of(anio, mes, dia);
+	}
+
+	private static boolean validarAnio(int anio) {
+		// Example: reasonable year validation
+		return anio > 1900 && anio <= LocalDate.now().getYear();
+	}
+
+	private static boolean validarMes(int mes) {
+		return mes >= 1 && mes <= 12;
+	}
+
+	private static boolean validarDia(int dia, int mes, int anio) {
+		try {
+			// Check if the day is valid for the given month and year
+			LocalDate.of(anio, mes, dia);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 	private static Integer loginMenu(Scanner teclado) {
