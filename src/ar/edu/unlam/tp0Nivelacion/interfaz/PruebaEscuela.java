@@ -16,6 +16,12 @@ public class PruebaEscuela {
 
 		Scanner teclado = new Scanner(System.in);
 		char perfilUsuario = '+';
+
+		// Instancias para poder validar contrasenias en menu de log in diferentes
+		// perfiles;
+		// dni/password: perfil administrativo = 111111; perfil docente = 222222; perfil
+		// alumno= 333333.-
+
 		Instituto instituto1 = new Instituto("InstitutoN1");
 		PersonalNoDocente listado[] = instituto1.getNoDocentes();
 		PersonalNoDocente noDocente1 = new PersonalNoDocente("Jose", " Perez", 111111, Cargo.ADMINISTRATIVO);
@@ -36,12 +42,14 @@ public class PruebaEscuela {
 			System.out.println("Ingrese '3' si es Alumno");
 			System.out.println("Ingrese '0' para Finalizar\n");
 
+			// Excepcion qeu corregiria inputs distintos a tipo int/Integer en caso de
+			// utilizar un tipo Integer en la opcion
+
 			// try {
 			perfilUsuario = teclado.next().charAt(0);
 			// } catch (Exception e) {
 			// System.out.println("Por favor, ingrese un número válido.");
-			// teclado.next(); // corrige inputs distintos a tipo int/Integer en caso de
-			// utilizar un tipo Integer en la opcion
+			// teclado.next();
 			// continue;
 			// }
 
@@ -144,6 +152,9 @@ public class PruebaEscuela {
 			System.out.println("\nIngrese dni del Docente\n");
 			dni = teclado.nextInt();
 			especializacion = seleccionExperiencia(teclado);
+
+//			Excepcion que cprregiria y validaria para asignar valor x teclado a un tipo Enum
+			
 //	            System.out.println("\nIngrese Expertise del Docente (PRIMER_GRADO, SEGUNDO_GRADO, etc.)\n");
 //			especializacion = teclado.next();
 //	            
@@ -254,7 +265,7 @@ public class PruebaEscuela {
 
 	private static void inscribirAlumno(Scanner teclado) {
 		String nombre, apellido, especializacion;
-		Integer dni,edad;
+		Integer dni, edad;
 		Boolean alumnoCreado = false;
 		do {
 
@@ -263,16 +274,15 @@ public class PruebaEscuela {
 			System.out.println("\nIngrese Apellido del Alumno\n");
 			apellido = teclado.next();
 			System.out.println("\nIngrese dni del Alulmno\n");
-			dni = teclado.nextInt();			
+			dni = teclado.nextInt();
 
 			LocalDate fechaDeNacimiento = ingresarFechaNacimiento(teclado);
-			edad=Period.between(fechaDeNacimiento, LocalDate.now()).getYears();
+			edad = Period.between(fechaDeNacimiento, LocalDate.now()).getYears();
 
-
-			Alumno alumno = new Alumno(nombre, apellido, dni, fechaDeNacimiento,edad);
+			Alumno alumno = new Alumno(nombre, apellido, dni, fechaDeNacimiento, edad);
 
 			if (alumno.getApellido() != null && alumno.getNombre() != null && alumno.getDni() != null
-					&& alumno.getFechaDeNacimiento() != null&& alumno!=null) {
+					&& alumno.getFechaDeNacimiento() != null && alumno != null) {
 				alumnoCreado = true;
 				System.out.println("Alumno creado exitosamente.");
 			} else {
@@ -300,7 +310,7 @@ public class PruebaEscuela {
 //
 //	}
 
-	private static LocalDate ingresarFechaNacimiento(Scanner teclado) {
+	private static LocalDate ingresarFechaNacimiento(Scanner teclado) {// Valida ingreso de fecha por teclado
 		int dia = 0, mes = 0, anio = 0;
 
 		System.out.println("Ingrese año de nacimiento");
@@ -322,17 +332,21 @@ public class PruebaEscuela {
 	}
 
 	private static boolean validarAnio(int anio) {
-		// Example: reasonable year validation
-		return anio > 1900 && anio <= LocalDate.now().getYear();
+		Boolean aniovalidado = false;
+		if (anio > 1900 && anio <= LocalDate.now().getYear())
+			aniovalidado = true;
+		return aniovalidado;
 	}
 
 	private static boolean validarMes(int mes) {
-		return mes >= 1 && mes <= 12;
+		Boolean mesValidado=false;
+		if( mes >= 1 && mes <= 12)
+			mesValidado=true;
+		return mesValidado;
 	}
 
-	private static boolean validarDia(int dia, int mes, int anio) {
+	private static boolean validarDia(int dia, int mes, int anio) {// Valida Años bisiestos ,metodo de la clase LocalDate
 		try {
-			// Check if the day is valid for the given month and year
 			LocalDate.of(anio, mes, dia);
 			return true;
 		} catch (Exception e) {
