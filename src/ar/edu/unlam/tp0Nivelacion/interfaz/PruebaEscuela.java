@@ -179,6 +179,7 @@ public class PruebaEscuela {
 			} else {
 				System.out.println("Algo fallo en el ingreso de datos\nVuelva a Intentarlo ");
 			}
+			
 
 		} while (!docenteCreado);
 	}
@@ -264,8 +265,10 @@ public class PruebaEscuela {
 	}
 
 	private static void inscribirAlumno(Scanner teclado) {
+
 		String nombre, apellido, especializacion;
 		Integer dni, edad;
+
 		Boolean alumnoCreado = false;
 		do {
 
