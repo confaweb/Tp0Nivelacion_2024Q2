@@ -23,9 +23,12 @@ public class Tests {
 		Docente docente1 = new Docente(null, null, cantidadAlumnos, null);
 		Alumno[] alumnos ;
 		alumnos= new Alumno [30];
+		Sala sala = null;
+		
 		//Proceso
-		Curso curso1 = new Curso( tipo,  sala, codigo, cantidadAlumnos,  docente,  alumnos );
+		Curso curso1 = new Curso( tipo,  sala, codigo, cantidadAlumnos,  docente1,  alumnos );
 		//Salida
+		assertNotNull(curso1);
 	}
 
 }
