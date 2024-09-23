@@ -13,7 +13,7 @@ import ar.edu.unlam.tp0Nivelacion.enums.Nivel;
 import ar.edu.unlam.tp0Nivelacion.enums.Sala;
 import ar.edu.unlam.tp0Nivelacion.enums.Tipo;
 
-public class Tests {
+public class TestsIniciales {
 
 	@Test //#1
 	public void queSePuedaCrearUnCurso() {
