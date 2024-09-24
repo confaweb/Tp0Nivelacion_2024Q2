@@ -2,7 +2,7 @@ package ar.edu.unlam.tp0Nivelacion.dominio;
 
 import ar.edu.unlam.tp0Nivelacion.enums.Competencia;
 
-public class Docente {
+public class Docente extends Persona {
 	private String nombre;
 	private String apellido;
 	private Integer  dni;
@@ -12,6 +12,7 @@ public class Docente {
 	
 	public Docente(String nombre,String apellido,Integer dni, 
 			Competencia expertis){
+		super(nombre,apellido,dni);
 		this.nombre =nombre;
 		this.apellido=apellido;
 		this.dni=dni;

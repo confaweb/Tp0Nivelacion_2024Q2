@@ -8,11 +8,14 @@ import org.junit.Test;
 
 import ar.edu.unlam.tp0Nivelacion.dominio.Alumno;
 import ar.edu.unlam.tp0Nivelacion.dominio.Docente;
+import ar.edu.unlam.tp0Nivelacion.dominio.Instituto;
+import ar.edu.unlam.tp0Nivelacion.dominio.PersonalNoDocente;
 import ar.edu.unlam.tp0Nivelacion.dominio.curso.Curso;
 import ar.edu.unlam.tp0Nivelacion.dominio.curso.Jardin;
 import ar.edu.unlam.tp0Nivelacion.dominio.curso.Primaria;
 import ar.edu.unlam.tp0Nivelacion.dominio.curso.Secundaria;
 import ar.edu.unlam.tp0Nivelacion.enums.Anio;
+import ar.edu.unlam.tp0Nivelacion.enums.Cargo;
 import ar.edu.unlam.tp0Nivelacion.enums.Competencia;
 import ar.edu.unlam.tp0Nivelacion.enums.Grado;
 import ar.edu.unlam.tp0Nivelacion.enums.Sala;
@@ -21,6 +24,7 @@ public class TestsCreacionClases {
 
 	@Test // #1
 	public void crearClasePadreCurso() {
+		// Entrada
 		char codigo = 0;
 		LinkedList<Alumno> alumnos = new LinkedList<Alumno>();
 		String nombreDocente = "Pedro";
@@ -29,7 +33,7 @@ public class TestsCreacionClases {
 		Competencia expertise = Competencia.DOCENTE;
 
 		Docente docente = new Docente(nombreDocente, apellidoDocente, dniDocente, expertise);
-		// Entrada
+		
 		// Proceso
 		Curso curso = new Curso(codigo, docente, alumnos);
 		// Salida
@@ -70,5 +74,47 @@ public class TestsCreacionClases {
 		assertNotNull(cursoGrado);
 		assertNotNull(cursoAnio);
 	}
-
+	@Test // #3
+	public void ingresarPersonalNoDocenteALaInstitucion() {		
+		// Entrada
+		
+		String nombreAdm = "Sandra";
+		String apellidoAdm="Bullock";
+		Integer dni=111111;
+		Cargo cargo=Cargo.ADMINISTRATIVO;
+		
+		PersonalNoDocente administrativo =new PersonalNoDocente(nombreAdm,apellidoAdm,dni,cargo);
+		String nombreInstituto="13 de Julio";
+		Instituto instituto = new Instituto(nombreInstituto);
+		// Proceso
+		instituto.agregarNoDocente(administrativo);
+	
+		// Salida
+		
+		assertTrue(instituto.getNoDocentes().contains(administrativo));
+		
+	}
+	@Test // #4
+	public void NosePuedaingresarPersonalNoDocenteALaInstitucionExistenteSegunDni() {		
+		// Entrada
+		
+		String nombreAdm = "Sandra",apellidoAdm="Bullock",nombreAdm2 = "Manuel",
+				apellidoAdm2="Lopez";
+		
+		Integer dni=111111,dni2=111111;
+		Cargo cargo=Cargo.ADMINISTRATIVO;
+		
+		PersonalNoDocente administrativo =new PersonalNoDocente(nombreAdm,apellidoAdm,dni,cargo);
+		PersonalNoDocente administrativo2 =new PersonalNoDocente(nombreAdm2,apellidoAdm2,dni2,cargo);
+		String nombreInstituto="13 de Julio";
+		Instituto instituto = new Instituto(nombreInstituto);
+		// Proceso
+		instituto.agregarNoDocente(administrativo);
+		instituto.agregarNoDocente(administrativo2);
+	
+		// Salida
+		
+		assertFalse(instituto.getNoDocentes().contains(administrativo2));
+		
+	}
 }

@@ -2,6 +2,7 @@ package ar.edu.unlam.tp0Nivelacion.interfaz;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import ar.edu.unlam.tp0Nivelacion.dominio.Alumno;
@@ -23,11 +24,11 @@ public class PruebaEscuela {
 		// alumno= 333333.-
 
 		Instituto instituto1 = new Instituto("InstitutoN1");
-		PersonalNoDocente listado[] = instituto1.getNoDocentes();
+		ArrayList<PersonalNoDocente> listado = instituto1.getNoDocentes();
 		PersonalNoDocente noDocente1 = new PersonalNoDocente("Jose", " Perez", 111111, Cargo.ADMINISTRATIVO);
-		Docente listadoDocentes[] = instituto1.getDocentes();
+		ArrayList<Docente> listadoDocentes = instituto1.getDocentes();
 		Docente docente1 = new Docente("Juana", "Echevarria", 222222, Competencia.PRIMARIA);
-		Alumno listadoAlumnos[] = instituto1.getAlumnos();
+		ArrayList<Alumno> listadoAlumnos = instituto1.getAlumnos();
 		Alumno alumno1 = new Alumno("Gaston", "Tejera", 333333, LocalDate.of(2016, 8, 12), 6);
 		instituto1.agregarNoDocente(noDocente1);
 		instituto1.agregarDocente(docente1);
@@ -154,7 +155,7 @@ public class PruebaEscuela {
 			especializacion = seleccionExperiencia(teclado);
 
 //			Excepcion que cprregiria y validaria para asignar valor x teclado a un tipo Enum
-			
+
 //	            System.out.println("\nIngrese Expertise del Docente (PRIMER_GRADO, SEGUNDO_GRADO, etc.)\n");
 //			especializacion = teclado.next();
 //	            
@@ -179,7 +180,6 @@ public class PruebaEscuela {
 			} else {
 				System.out.println("Algo fallo en el ingreso de datos\nVuelva a Intentarlo ");
 			}
-			
 
 		} while (!docenteCreado);
 	}
@@ -342,13 +342,14 @@ public class PruebaEscuela {
 	}
 
 	private static boolean validarMes(int mes) {
-		Boolean mesValidado=false;
-		if( mes >= 1 && mes <= 12)
-			mesValidado=true;
+		Boolean mesValidado = false;
+		if (mes >= 1 && mes <= 12)
+			mesValidado = true;
 		return mesValidado;
 	}
 
-	private static boolean validarDia(int dia, int mes, int anio) {// Valida Años bisiestos ,metodo de la clase LocalDate
+	private static boolean validarDia(int dia, int mes, int anio) {// Valida Años bisiestos ,metodo de la clase
+																	// LocalDate
 		try {
 			LocalDate.of(anio, mes, dia);
 			return true;
@@ -367,31 +368,30 @@ public class PruebaEscuela {
 		return dni;
 	}
 
-	private static boolean administrativoLog(PersonalNoDocente listado[], Integer dni) {
+	private static boolean administrativoLog(ArrayList<PersonalNoDocente> listado, Integer dni) {
 		Boolean login = false;
-
-		for (int i = 0; i < listado.length; i++) {
-			if (listado[i].getDni().equals(dni))
+		for (PersonalNoDocente personalNoDocente : listado) {
+			if (personalNoDocente.getDni().equals(dni))
 				login = true;
 		}
 		return login;
 	}
 
-	private static boolean docenteLog(Docente listado[], Integer dni) {
+	private static boolean docenteLog(ArrayList<Docente> listadoDocentes, Integer dni) {
 		Boolean login = false;
 
-		for (int i = 0; i < listado.length; i++) {
-			if (listado[i].getDni().equals(dni))
+		for (Docente docente : listadoDocentes) {
+			if (docente.getDni().equals(dni))
 				login = true;
 		}
 		return login;
 	}
 
-	private static boolean alumnoLog(Alumno listado[], Integer dni) {
+	private static boolean alumnoLog(ArrayList<Alumno> listadoAlumnos, Integer dni) {
 		Boolean login = false;
 
-		for (int i = 0; i < listado.length; i++) {
-			if (listado[i].getDni().equals(dni))
+		for (Alumno alumno : listadoAlumnos) {
+			if (alumno.getDni().equals(dni))
 				login = true;
 		}
 		return login;
