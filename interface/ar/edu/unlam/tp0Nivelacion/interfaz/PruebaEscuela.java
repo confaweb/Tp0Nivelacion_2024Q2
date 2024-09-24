@@ -26,7 +26,7 @@ public class PruebaEscuela {
 		PersonalNoDocente listado[] = instituto1.getNoDocentes();
 		PersonalNoDocente noDocente1 = new PersonalNoDocente("Jose", " Perez", 111111, Cargo.ADMINISTRATIVO);
 		Docente listadoDocentes[] = instituto1.getDocentes();
-		Docente docente1 = new Docente("Juana", "Echevarria", 222222, Competencia.PRIMER_GRADO);
+		Docente docente1 = new Docente("Juana", "Echevarria", 222222, Competencia.PRIMARIA);
 		Alumno listadoAlumnos[] = instituto1.getAlumnos();
 		Alumno alumno1 = new Alumno("Gaston", "Tejera", 333333, LocalDate.of(2016, 8, 12), 6);
 		instituto1.agregarNoDocente(noDocente1);
