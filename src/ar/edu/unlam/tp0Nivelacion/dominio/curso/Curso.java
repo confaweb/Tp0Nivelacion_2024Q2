@@ -17,14 +17,11 @@ public class Curso {
 	private LinkedList <Alumno> alumnos;
 	private Docente docente ;
 
-	public Curso( char codigo, Docente  docente, LinkedList<Alumno> alumnos) {
-		
+	public Curso( char codigo, Docente  docente, LinkedList<Alumno> alumnos) {		
 		this.codigo = codigo;
 		this.docente = docente;
 		this.alumnos = new  LinkedList <Alumno>();
 	}
-
-
 
 	public char getCodigo() {
 		return codigo;
@@ -38,36 +35,23 @@ public class Curso {
 		return alumnos;
 	}
 
-	
-
-
 	public Docente getDocente() {
 		return docente;
 	}
 
-
-
 	public void setAlumnos(LinkedList<Alumno> alumnos) {
 		this.alumnos = alumnos;
 	}
-
-
 
 	public void setDocentes(Docente docente) {
 		this.docente = docente;
 	}
 
 
-
-
-
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigo);
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -80,8 +64,6 @@ public class Curso {
 		Curso other = (Curso) obj;
 		return codigo == other.codigo;
 	}
-
-
 
 	@Override
 	public String toString() {

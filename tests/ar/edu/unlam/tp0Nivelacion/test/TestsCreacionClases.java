@@ -42,6 +42,7 @@ public class TestsCreacionClases {
 
 	@Test // #2
 	public void crearClasesHijasDeCurso() {
+		// Entrada
 		char codigo = 0;
 		String nombreDocente = "Pedro";
 		String apellidoDocente = "Sanchez";
@@ -54,14 +55,13 @@ public class TestsCreacionClases {
 		Docente docente_2 = new Docente(nombreDocente, apellidoDocente, dniDocente, expertiseJardin);
 		Docente docentePrimaria = new Docente(nombreDocente, apellidoDocente, dniDocente, expertisePrimaria);
 		Docente docenteSecundaria = new Docente(nombreDocente, apellidoDocente, dniDocente, expertiseSecundaria);
-		;
 		Sala color = Sala.AZUL;
 		Grado grado = Grado.CUARTO_GRADO;
 		Anio anio = Anio.PRIMER_ANIO;
 
 		LinkedList<Alumno> alumnos = new LinkedList<Alumno>();
 
-		// Entrada
+		
 		// Proceso
 		Curso curso = new Curso(codigo, docente, alumnos);
 		Jardin sala = new Jardin(codigo, color, docente, docente_2, alumnos);
@@ -110,11 +110,11 @@ public class TestsCreacionClases {
 		Instituto instituto = new Instituto(nombreInstituto);
 		// Proceso
 		instituto.agregarNoDocente(administrativo);
-		instituto.agregarNoDocente(administrativo2);
+		
 	
 		// Salida
 		
-		assertFalse(instituto.getNoDocentes().contains(administrativo2));
+		assertFalse(instituto.agregarNoDocente(administrativo2));
 		
 	}
 }

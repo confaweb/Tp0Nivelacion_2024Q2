@@ -1,5 +1,7 @@
 package ar.edu.unlam.tp0Nivelacion.dominio;
 
+import java.util.Objects;
+
 import ar.edu.unlam.tp0Nivelacion.enums.Competencia;
 
 public class Docente extends Persona {
@@ -67,6 +69,27 @@ public class Docente extends Persona {
 
 	public void setExpertis(Competencia expertis) {
 		this.expertis = expertis;
+	}
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(dni);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Docente other = (Docente) obj;
+		return Objects.equals(dni, other.dni);
 	}
 
 	@Override
