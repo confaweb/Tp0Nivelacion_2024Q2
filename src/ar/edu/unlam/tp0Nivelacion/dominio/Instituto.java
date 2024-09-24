@@ -2,6 +2,8 @@ package ar.edu.unlam.tp0Nivelacion.dominio;
 
 import java.util.Arrays;
 
+import ar.edu.unlam.tp0Nivelacion.dominio.curso.Curso;
+
 public class Instituto {
 
 	private String nombre;
