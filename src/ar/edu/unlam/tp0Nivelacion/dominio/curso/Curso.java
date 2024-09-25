@@ -46,6 +46,31 @@ public class Curso {
 	public void setDocentes(Docente docente) {
 		this.docente = docente;
 	}
+	public Boolean asignarDocente(Docente docente) {
+		Boolean docenteAsignado = false;
+		if (chequearCompentencia(docente)) {
+			this.setDocentes(docente);
+			docenteAsignado = true;
+		}else {
+			 mensajeErrorAcreditacion();
+		}
+		return docenteAsignado;
+	}
+
+	private Boolean chequearCompentencia(Docente docente) {
+		Boolean esCompetente=false;
+		for (Competencia competencia : Competencia.values()) {
+			if(competencia.equals(docente.getExpertis()))
+				esCompetente=true;
+		}
+		return esCompetente;
+	}
+
+	private void mensajeErrorAcreditacion() {
+		// TODO Auto-generated method stub
+		System.out.println("Error de Acreditacion,docente no especializado"); 
+	}
+
 
 
 	@Override

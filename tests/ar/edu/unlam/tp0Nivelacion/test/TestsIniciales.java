@@ -31,7 +31,7 @@ public class TestsIniciales {
 		char codigo = '0',codigo2='1';		
 		Integer dniDocente = 111111;
 		Competencia expertise= Competencia.PRIMARIA;
-		Competencia expertise2= Competencia.SECUNDARIA;
+		Competencia expertise2= Competencia.JARDIN;
 		Docente docente = new Docente(nombreDocente, apellidoDocente, dniDocente, expertise);
 		Docente docente2 = new Docente(nombreDocente, apellidoDocente, dniDocente, expertise2);
 		LinkedList alumnos;
@@ -42,12 +42,18 @@ public class TestsIniciales {
 		Primaria curso1 = new Primaria( codigo,  grado,  docente,  alumnos );
 		Secundaria curso2 = new Secundaria(  codigo2, anio, docente2,  alumnos );
 		
+		curso2.asignarDocente(docente2);
+		
 		//Salida
 		
 		Competencia ve=Competencia.PRIMARIA;
 		Competencia vo=curso1.getDocente().getExpertis();
-		Competencia ve1=Competencia.SECUNDARIA;
-		Competencia vo1=curso2.getDocente().getExpertis();
+		String ve1="secundaria";
+		String vo1=curso2.getDocente().getExpertis().getNivel();
+		assertEquals(ve,vo);
+		assertEquals(ve1,vo1);
+
+		
 	}
 
 

@@ -52,7 +52,6 @@ public class TestsCreacionClases {
 		Competencia expertiseJardin = Competencia.JARDIN;
 		Competencia expertiseSecundaria = Competencia.GEOGRAFIA;
 		Competencia expertisePrimaria = Competencia.PRIMARIA;
-		Integer cantidadAlumnos = null;
 		Docente docente = new Docente(nombreDocente, apellidoDocente, dniDocente, expertiseJardin);
 		Docente docente_2 = new Docente(nombreDocente, apellidoDocente, dniDocente, expertiseJardin);
 		Docente docentePrimaria = new Docente(nombreDocente, apellidoDocente, dniDocente, expertisePrimaria);
@@ -98,7 +97,8 @@ public class TestsCreacionClases {
 	}
 
 	@Test // #4
-	public void NosePuedaingresarPersonalNoDocenteExistenteALaInstitucionSegunDni() {
+	public void NosePuedaingresarPersonaYaExistenteALaInstitucionSegunDni() {// Logica/Test valida para Docente,Alumno y
+																				// PersonalNoDocente
 		// Entrada
 
 		String nombreAdm = "Sandra", apellidoAdm = "Bullock", nombreAdm2 = "Manuel", apellidoAdm2 = "Lopez";
@@ -117,6 +117,7 @@ public class TestsCreacionClases {
 
 		assertFalse(instituto.agregarNoDocente(administrativo2));
 	}
+
 	@Test // #5
 	public void calcularEdadPorFechaDeNacimiento() {
 		// Entrada
@@ -134,10 +135,16 @@ public class TestsCreacionClases {
 
 		// Salida
 
-		Integer ve=9;
-		Integer vo=calcularEdad(fechaDeNacimientoAlPri);
-		assertEquals(ve,vo);
+		Integer ve = 9;
+		Integer vo = calcularEdad(fechaDeNacimientoAlPri);
+		assertEquals(ve, vo);
 
+	}
+	// Calcular Edad Alumno (test #5)
+
+	private Integer calcularEdad(LocalDate fechaDeNacimientoAlPri) {
+		Integer edad = Period.between(fechaDeNacimientoAlPri, LocalDate.now()).getYears();
+		return edad;
 	}
 
 	@Test // #6
@@ -160,6 +167,7 @@ public class TestsCreacionClases {
 		assertTrue(instituto.getAlumnos().contains(alumnoPrimaria));
 
 	}
+
 	@Test // #7
 	public void asignarCursoAUnAlumnoCuyaEdadSeaDePrimaria() {
 		// Entrada
@@ -177,43 +185,81 @@ public class TestsCreacionClases {
 		Competencia expertisePrimaria = Competencia.PRIMARIA;
 		Docente docentePrimaria = new Docente(nombreDocente, apellidoDocente, dniDocente, expertisePrimaria);
 		// Proceso
-		
-		 LinkedList<Alumno> alumnos = new LinkedList<>();
 
-		
-		
+		LinkedList<Alumno> alumnos = new LinkedList<>();
+
 		char codigo = 01;
-		Primaria cursoPrimerGrado = new Primaria(codigo,Grado.PRIMER_GRADO, docentePrimaria, alumnos);
+		Primaria cursoPrimerGrado = new Primaria(codigo, Grado.PRIMER_GRADO, docentePrimaria, alumnos);
 		Primaria cursoSegundoGrado = new Primaria(codigo, Grado.SEGUNDO_GRADO, docentePrimaria, alumnos);
 		Primaria cursoTercerGrado = new Primaria(codigo, Grado.TERCER_GRADO, docentePrimaria, alumnos);
 		Primaria cursoCuartoGrado = new Primaria(codigo, Grado.CUARTO_GRADO, docentePrimaria, alumnos);
 		Primaria cursoQuintoGrado = new Primaria(codigo, Grado.QUINTO_GRADO, docentePrimaria, alumnos);
 		Primaria cursoSextoGrado = new Primaria(codigo, Grado.SEXTO_GRADO, docentePrimaria, alumnos);
 		Primaria cursoSeptimoGrado = new Primaria(codigo, Grado.SEPTIMO_GRADO, docentePrimaria, alumnos);
-		
+
 		instituto.getCursosPrimaria().add(cursoPrimerGrado);
 		instituto.getCursosPrimaria().add(cursoSegundoGrado);
 		instituto.getCursosPrimaria().add(cursoTercerGrado);
 		instituto.getCursosPrimaria().add(cursoCuartoGrado);
 		instituto.getCursosPrimaria().add(cursoQuintoGrado);
 		instituto.getCursosPrimaria().add(cursoSextoGrado);
-		instituto.getCursosPrimaria().add(cursoSeptimoGrado);	
+		instituto.getCursosPrimaria().add(cursoSeptimoGrado);
+
+		// Salida
+
+		assertTrue(instituto.asignarCursoPrimariaPorEdad(alumnoPrimaria));
+
+	}
+	@Test // #8
+	public void AsignarDocenteSalaJardin() {
+		// Entrada		
 		
+		String nombreInstituto = "13 de Julio";
+		String nombreDocente = "Pedro",nombreDocente2 = "Ramona";
+		String apellidoDocente = "Sanchez",apellidoDocente2 = "Lopez";
+		Integer dniDocente = 111111,dniDocente2=22222;
+		Sala sala=Sala.CELESTE;
+		Instituto instituto = new Instituto(nombreInstituto);
+		Competencia expertiseJardin = Competencia.JARDIN;
+		LinkedList<Alumno> alumnos = new LinkedList<>();		
+		// Proceso
+		
+		Docente docenteJardin = new Docente(nombreDocente, apellidoDocente, dniDocente, expertiseJardin);
+		Docente docenteJardin2 = new Docente(nombreDocente2, apellidoDocente2, dniDocente2, expertiseJardin);
+		Jardin  salaJardin=new Jardin('3', sala, docenteJardin, docenteJardin2, alumnos);	
 		
 
 		// Salida
-		
-		assertTrue(instituto.asignarCursoPrimariaPorEdad(alumnoPrimaria));
 
-		
-
+		assertTrue(salaJardin.asignarDocente(docenteJardin));
 	}
-	// Calcular Edad Alumno test #5
+	@Test // #9
+	public void queNOSePuedaAsignarDocenteSalaJardinSinAcreditarExperienciaAdecuada() {
+		// Entrada		
+		
+		String nombreInstituto = "13 de Julio";
+		String nombreDocente = "Pedro",nombreDocente2 = "Ramona";
+		String apellidoDocente = "Sanchez",apellidoDocente2 = "Lopez";
+		String mensajeError="Error de Acreditacion,docente no especializado";
+		Integer dniDocente = 111111,dniDocente2=22222;
+		Sala sala=Sala.CELESTE;
+		Instituto instituto = new Instituto(nombreInstituto);
+		Competencia expertiseJardin = Competencia.GEOGRAFIA;
+		LinkedList<Alumno> alumnos = new LinkedList<>();		
+		// Proceso
+		
+		Docente docenteJardin = new Docente(nombreDocente, apellidoDocente, dniDocente, expertiseJardin);
+		Docente docenteJardin2 = new Docente(nombreDocente2, apellidoDocente2, dniDocente2, expertiseJardin);
+		Jardin  salaJardin=new Jardin('3', sala, docenteJardin, docenteJardin2, alumnos);	
+		
 
-	private Integer calcularEdad(LocalDate fechaDeNacimientoAlPri) {
-		Integer edad = Period.between(fechaDeNacimientoAlPri, LocalDate.now()).getYears();
-		return edad;
+		// Salida
+
+		assertFalse(salaJardin.asignarDocente(docenteJardin));
+		
 	}
+	
+
+
 
 }
-
