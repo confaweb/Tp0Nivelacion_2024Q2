@@ -1,7 +1,5 @@
 package ar.edu.unlam.tp0Nivelacion.dominio;
 
-import java.util.Objects;
-
 import ar.edu.unlam.tp0Nivelacion.enums.Cargo;
 
 public class PersonalNoDocente extends Persona {
@@ -25,24 +23,11 @@ public class PersonalNoDocente extends Persona {
 		this.dni = dni;
 	}
 
-//	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = super.hashCode();
-//		result = prime * result + Objects.hash(dni);
-//		return result;
-//	}
-//
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (!super.equals(obj))
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		PersonalNoDocente other = (PersonalNoDocente) obj;
-//		return Objects.equals(dni, other.dni);
-//	}
+	@Override
+	public String toString() {
+		return "PersonalNoDocente [cargo=" + cargo + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+				+ "]";
+	}
+	
 
 }

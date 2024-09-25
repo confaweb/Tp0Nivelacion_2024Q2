@@ -11,6 +11,7 @@ import ar.edu.unlam.tp0Nivelacion.dominio.Instituto;
 import ar.edu.unlam.tp0Nivelacion.dominio.PersonalNoDocente;
 import ar.edu.unlam.tp0Nivelacion.enums.Cargo;
 import ar.edu.unlam.tp0Nivelacion.enums.Competencia;
+import ar.edu.unlam.tp0Nivelacion.enums.Nivel;
 
 public class PruebaEscuela {
 	public static void main(String[] args) {
@@ -30,6 +31,8 @@ public class PruebaEscuela {
 		Docente docente1 = new Docente("Juana", "Echevarria", 222222, Competencia.PRIMARIA);
 		ArrayList<Alumno> listadoAlumnos = instituto1.getAlumnos();
 		Alumno alumno1 = new Alumno("Gaston", "Tejera", 333333, LocalDate.of(2016, 8, 12), 6);
+		
+		// Se Preingresa un integrante de cada perfil de Log al sistema para poder utilizar sus DNI y Loguearse en 
 		instituto1.agregarNoDocente(noDocente1);
 		instituto1.agregarDocente(docente1);
 		instituto1.agregarAlumno(alumno1);
@@ -86,7 +89,7 @@ public class PruebaEscuela {
 					System.out.println("* Menu Perfil ALUMNO * \n\n");
 					alumnoMenu(teclado);
 				} else
-					System.out.println("\n\n ¬¬¬¬Login invalido");
+					System.out.println("\n\n 'Login invalido' ");
 
 				break;
 			case '0':
@@ -192,14 +195,14 @@ public class PruebaEscuela {
 		do {
 
 			System.out.println("\nSeleccione la experiencia acreditada del listado:\n\n");
-			System.out.println("'1' para primer grado");
-			System.out.println("'2' para seguno grado");
-			System.out.println("'3' para tercer grado");
-			System.out.println("'4' para cuarto grado");
-			System.out.println("'5' para quinto grado");
-			System.out.println("'6' para sexto grado");
-			System.out.println("'7' para septimo grado");
-			System.out.println("'S' para secundaria grado");
+			System.out.println("'1' para Jardin");
+			System.out.println("'2' para Primaria");
+			System.out.println("'3' para Literatura");
+			System.out.println("'4' para Matematica");
+			System.out.println("'5' para Geografia");
+			System.out.println("'6' para Historia");
+			System.out.println("'7' para Idioma");
+			System.out.println("'F' para Educacion Fisica");
 			System.out.println("'E' para asignaturas especiales ");
 			System.out.println("\n'0' para volver al menu principal ");
 
@@ -208,43 +211,43 @@ public class PruebaEscuela {
 			switch (seleccion) {
 
 			case '1':
-				especializacion = "PRIMER_GRADO";
+				especializacion = "JARDIN";
 				asignada = true;
 				break;
 
 			case '2':
-				especializacion = "SEGUNDO_GRADO";
+				especializacion = "PRIMARIA";
 				asignada = true;
 
 				break;
 
 			case '3':
-				especializacion = "TERCER_GRADO";
+				especializacion = "LITERATURA";
 				asignada = true;
 				break;
 
 			case '4':
-				especializacion = "CUARTO_GRADO";
+				especializacion = "MATEMATICA";
 				asignada = true;
 				break;
 
 			case '5':
-				especializacion = "QUINTO_GRADO";
+				especializacion = "GEOGRAFIA";
 				asignada = true;
 				break;
 
 			case '6':
-				especializacion = "SEXTO_GRADO";
+				especializacion = "HISTORIA";
 				asignada = true;
 				break;
 
 			case '7':
-				especializacion = "SEPTIMO_GRADO";
+				especializacion = "IDIOMA";
 				asignada = true;
 				break;
 
-			case 'S':
-				especializacion = "SECUNDARIA";
+			case 'F':
+				especializacion = "EDUCACION_FISICA";
 				asignada = true;
 				break;
 
@@ -363,6 +366,9 @@ public class PruebaEscuela {
 		Integer dni = 0;
 		while (dni == 0) {
 			System.out.println("Ingrese contrasenia (numero dni)");
+			System.out.println("\n -dni= 111111-->si es Administrativo");
+			System.out.println(" -dni= 22222-->si es Docente");
+			System.out.println(" -dni= 333333-->si es Alumno\n");
 			dni = teclado.nextInt();
 		}
 		return dni;

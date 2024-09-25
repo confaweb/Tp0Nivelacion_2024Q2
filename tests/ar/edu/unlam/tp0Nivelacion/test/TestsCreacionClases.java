@@ -2,6 +2,8 @@ package ar.edu.unlam.tp0Nivelacion.test;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.LinkedList;
 
 import org.junit.Test;
@@ -25,7 +27,7 @@ public class TestsCreacionClases {
 	@Test // #1
 	public void crearClasePadreCurso() {
 		// Entrada
-		char codigo = 0;
+		char codigo = '0';
 		LinkedList<Alumno> alumnos = new LinkedList<Alumno>();
 		String nombreDocente = "Pedro";
 		String apellidoDocente = "Sanchez";
@@ -33,7 +35,7 @@ public class TestsCreacionClases {
 		Competencia expertise = Competencia.DOCENTE;
 
 		Docente docente = new Docente(nombreDocente, apellidoDocente, dniDocente, expertise);
-		
+
 		// Proceso
 		Curso curso = new Curso(codigo, docente, alumnos);
 		// Salida
@@ -61,7 +63,6 @@ public class TestsCreacionClases {
 
 		LinkedList<Alumno> alumnos = new LinkedList<Alumno>();
 
-		
 		// Proceso
 		Curso curso = new Curso(codigo, docente, alumnos);
 		Jardin sala = new Jardin(codigo, color, docente, docente_2, alumnos);
@@ -74,47 +75,145 @@ public class TestsCreacionClases {
 		assertNotNull(cursoGrado);
 		assertNotNull(cursoAnio);
 	}
+
 	@Test // #3
-	public void ingresarPersonalNoDocenteALaInstitucion() {		
+	public void ingresarPersonalNoDocenteALaInstitucion() {
 		// Entrada
-		
+
 		String nombreAdm = "Sandra";
-		String apellidoAdm="Bullock";
-		Integer dni=111111;
-		Cargo cargo=Cargo.ADMINISTRATIVO;
-		
-		PersonalNoDocente administrativo =new PersonalNoDocente(nombreAdm,apellidoAdm,dni,cargo);
-		String nombreInstituto="13 de Julio";
+		String apellidoAdm = "Bullock";
+		Integer dni = 111111;
+		Cargo cargo = Cargo.ADMINISTRATIVO;
+
+		PersonalNoDocente administrativo = new PersonalNoDocente(nombreAdm, apellidoAdm, dni, cargo);
+		String nombreInstituto = "13 de Julio";
 		Instituto instituto = new Instituto(nombreInstituto);
 		// Proceso
 		instituto.agregarNoDocente(administrativo);
-	
+
 		// Salida
-		
+
 		assertTrue(instituto.getNoDocentes().contains(administrativo));
-		
+
 	}
+
 	@Test // #4
-	public void NosePuedaingresarPersonalNoDocenteALaInstitucionExistenteSegunDni() {		
+	public void NosePuedaingresarPersonalNoDocenteExistenteALaInstitucionSegunDni() {
 		// Entrada
-		
-		String nombreAdm = "Sandra",apellidoAdm="Bullock",nombreAdm2 = "Manuel",
-				apellidoAdm2="Lopez";
-		
-		Integer dni=111111,dni2=111111;
-		Cargo cargo=Cargo.ADMINISTRATIVO;
-		
-		PersonalNoDocente administrativo =new PersonalNoDocente(nombreAdm,apellidoAdm,dni,cargo);
-		PersonalNoDocente administrativo2 =new PersonalNoDocente(nombreAdm2,apellidoAdm2,dni2,cargo);
-		String nombreInstituto="13 de Julio";
+
+		String nombreAdm = "Sandra", apellidoAdm = "Bullock", nombreAdm2 = "Manuel", apellidoAdm2 = "Lopez";
+
+		Integer dni = 111111, dni2 = 111111;
+		Cargo cargo = Cargo.ADMINISTRATIVO;
+
+		PersonalNoDocente administrativo = new PersonalNoDocente(nombreAdm, apellidoAdm, dni, cargo);
+		PersonalNoDocente administrativo2 = new PersonalNoDocente(nombreAdm2, apellidoAdm2, dni2, cargo);
+		String nombreInstituto = "13 de Julio";
 		Instituto instituto = new Instituto(nombreInstituto);
 		// Proceso
+
 		instituto.agregarNoDocente(administrativo);
+		// Salida
+
+		assertFalse(instituto.agregarNoDocente(administrativo2));
+	}
+	@Test // #5
+	public void calcularEdadPorFechaDeNacimiento() {
+		// Entrada
+
+		String nombreAlPri = "Sandra";
+		String apellidoAlPri = "Bullock";
+		LocalDate fechaDeNacimientoAlPri = LocalDate.of(2015, 6, 25);
+		Integer dniAl = 111111, edad = calcularEdad(fechaDeNacimientoAlPri);
+		Alumno alumnoPrimaria = new Alumno(nombreAlPri, apellidoAlPri, dniAl, fechaDeNacimientoAlPri, edad);
+		String nombreInstituto = "13 de Julio";
+		Instituto instituto = new Instituto(nombreInstituto);
+		// Proceso
+
+		instituto.agregarAlumno(alumnoPrimaria);
+
+		// Salida
+
+		Integer ve=9;
+		Integer vo=calcularEdad(fechaDeNacimientoAlPri);
+		assertEquals(ve,vo);
+
+	}
+
+	@Test // #6
+	public void ingresarAlumno() {
+		// Entrada
+
+		String nombreAlPri = "Sandra";
+		String apellidoAlPri = "Bullock";
+		LocalDate fechaDeNacimientoAlPri = LocalDate.of(2015, 6, 25);
+		Integer dniAl = 111111, edad = calcularEdad(fechaDeNacimientoAlPri);
+		Alumno alumnoPrimaria = new Alumno(nombreAlPri, apellidoAlPri, dniAl, fechaDeNacimientoAlPri, edad);
+		String nombreInstituto = "13 de Julio";
+		Instituto instituto = new Instituto(nombreInstituto);
+		// Proceso
+
+		instituto.agregarAlumno(alumnoPrimaria);
+
+		// Salida
+
+		assertTrue(instituto.getAlumnos().contains(alumnoPrimaria));
+
+	}
+	@Test // #7
+	public void asignarCursoAUnAlumnoCuyaEdadSeaDePrimaria() {
+		// Entrada
+
+		String nombreAlPri = "Sandra";
+		String apellidoAlPri = "Bullock";
+		LocalDate fechaDeNacimientoAlPri = LocalDate.of(2015, 6, 25);
+		Integer dniAl = 111111, edad = calcularEdad(fechaDeNacimientoAlPri);
+		Alumno alumnoPrimaria = new Alumno(nombreAlPri, apellidoAlPri, dniAl, fechaDeNacimientoAlPri, edad);
+		String nombreInstituto = "13 de Julio";
+		String nombreDocente = "Pedro";
+		String apellidoDocente = "Sanchez";
+		Integer dniDocente = 111111;
+		Instituto instituto = new Instituto(nombreInstituto);
+		Competencia expertisePrimaria = Competencia.PRIMARIA;
+		Docente docentePrimaria = new Docente(nombreDocente, apellidoDocente, dniDocente, expertisePrimaria);
+		// Proceso
 		
-	
+		 LinkedList<Alumno> alumnos = new LinkedList<>();
+
+		
+		
+		char codigo = 01;
+		Primaria cursoPrimerGrado = new Primaria(codigo,Grado.PRIMER_GRADO, docentePrimaria, alumnos);
+		Primaria cursoSegundoGrado = new Primaria(codigo, Grado.SEGUNDO_GRADO, docentePrimaria, alumnos);
+		Primaria cursoTercerGrado = new Primaria(codigo, Grado.TERCER_GRADO, docentePrimaria, alumnos);
+		Primaria cursoCuartoGrado = new Primaria(codigo, Grado.CUARTO_GRADO, docentePrimaria, alumnos);
+		Primaria cursoQuintoGrado = new Primaria(codigo, Grado.QUINTO_GRADO, docentePrimaria, alumnos);
+		Primaria cursoSextoGrado = new Primaria(codigo, Grado.SEXTO_GRADO, docentePrimaria, alumnos);
+		Primaria cursoSeptimoGrado = new Primaria(codigo, Grado.SEPTIMO_GRADO, docentePrimaria, alumnos);
+		
+		instituto.getCursosPrimaria().add(cursoPrimerGrado);
+		instituto.getCursosPrimaria().add(cursoSegundoGrado);
+		instituto.getCursosPrimaria().add(cursoTercerGrado);
+		instituto.getCursosPrimaria().add(cursoCuartoGrado);
+		instituto.getCursosPrimaria().add(cursoQuintoGrado);
+		instituto.getCursosPrimaria().add(cursoSextoGrado);
+		instituto.getCursosPrimaria().add(cursoSeptimoGrado);	
+		
+		
+
 		// Salida
 		
-		assertFalse(instituto.agregarNoDocente(administrativo2));
+		assertTrue(instituto.asignarCursoPrimariaPorEdad(alumnoPrimaria));
+
 		
+
 	}
+	// Calcular Edad Alumno test #5
+
+	private Integer calcularEdad(LocalDate fechaDeNacimientoAlPri) {
+		Integer edad = Period.between(fechaDeNacimientoAlPri, LocalDate.now()).getYears();
+		return edad;
+	}
+
 }
+
