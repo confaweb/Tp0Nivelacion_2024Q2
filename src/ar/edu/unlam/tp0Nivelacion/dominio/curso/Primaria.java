@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import ar.edu.unlam.tp0Nivelacion.dominio.Alumno;
 import ar.edu.unlam.tp0Nivelacion.dominio.Docente;
+import ar.edu.unlam.tp0Nivelacion.enums.Competencia;
 import ar.edu.unlam.tp0Nivelacion.enums.Grado;
 
 public class Primaria extends Curso{
@@ -29,5 +30,21 @@ public class Primaria extends Curso{
 	public void setGrado(Grado grado) {
 		this.grado = grado;
 	}
+	public Boolean asignarDocente(Docente docentePrimaria) {
+		Boolean docenteAsignado = false;
+		if (docentePrimaria.getExpertis().equals(Competencia.PRIMARIA)) {
+			this.setDocentes(docentePrimaria);
+			docenteAsignado = true;
+		}else {
+			 mensajeErrorAcreditacion();
+		}
+		return docenteAsignado;
+	}
+
+	private void mensajeErrorAcreditacion() {
+		// TODO Auto-generated method stub
+		System.out.println("Error de Acreditacion,docente no especializado"); 
+	}
+
 
 }

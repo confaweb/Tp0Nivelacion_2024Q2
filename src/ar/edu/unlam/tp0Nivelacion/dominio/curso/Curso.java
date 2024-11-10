@@ -17,14 +17,11 @@ public class Curso {
 	private LinkedList <Alumno> alumnos;
 	private Docente docente ;
 
-	public Curso( char codigo, Docente  docente, LinkedList<Alumno> alumnos) {
-		
+	public Curso( char codigo, Docente  docente, LinkedList<Alumno> alumnos) {		
 		this.codigo = codigo;
 		this.docente = docente;
 		this.alumnos = new  LinkedList <Alumno>();
 	}
-
-
 
 	public char getCodigo() {
 		return codigo;
@@ -38,27 +35,41 @@ public class Curso {
 		return alumnos;
 	}
 
-	
-
-
 	public Docente getDocente() {
 		return docente;
 	}
-
-
 
 	public void setAlumnos(LinkedList<Alumno> alumnos) {
 		this.alumnos = alumnos;
 	}
 
-
-
 	public void setDocentes(Docente docente) {
 		this.docente = docente;
 	}
+	public Boolean asignarDocente(Docente docente) {
+		Boolean docenteAsignado = false;
+		if (chequearCompentencia(docente)) {
+			this.setDocentes(docente);
+			docenteAsignado = true;
+		}else {
+			 mensajeErrorAcreditacion();
+		}
+		return docenteAsignado;
+	}
 
+	private Boolean chequearCompentencia(Docente docente) {
+		Boolean esCompetente=false;
+		for (Competencia competencia : Competencia.values()) {
+			if(competencia.equals(docente.getExpertis()))
+				esCompetente=true;
+		}
+		return esCompetente;
+	}
 
-
+	private void mensajeErrorAcreditacion() {
+		// TODO Auto-generated method stub
+		System.out.println("Error de Acreditacion,docente no especializado"); 
+	}
 
 
 
@@ -66,8 +77,6 @@ public class Curso {
 	public int hashCode() {
 		return Objects.hash(codigo);
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -80,8 +89,6 @@ public class Curso {
 		Curso other = (Curso) obj;
 		return codigo == other.codigo;
 	}
-
-
 
 	@Override
 	public String toString() {
