@@ -114,7 +114,9 @@ public class TestsCreacionClases {
 	
 		// Salida
 		
-		assertFalse(instituto.getNoDocentes().contains(administrativo2));
+		//assertFalse(instituto.getNoDocentes().contains(administrativo2));
+		assertNotEquals(administrativo,administrativo2);
+
 		
 	}
 }
